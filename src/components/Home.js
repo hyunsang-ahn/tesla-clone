@@ -46,6 +46,12 @@ const Home = () => {
         LeftBtnText="주문하기"
         rightBtnText="자세히 알아보기"
       />
+      <Section
+        title="악세서리"
+        description=""
+        backgroundImg="accessories.jpg"
+        LeftBtnText="주문하기"
+      />
 
     </Container>
   );
