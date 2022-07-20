@@ -1,38 +1,45 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
+import { selectCar } from '../features/car/carSlice';
+import { useSelector } from 'react-redux';
 const Header = () => {
+  const [burgerOpen, setBurgerStatus] = useState(false)
+  const cars = useSelector(selectCar)
+  console.log(cars)
   return (
     <Container>
       <a>
         <img src="/images/logo.svg" alt='' />
       </a>
       <Menu>
-        <a href="#">모델 S</a>
-        <a href="#">모델 3</a>
-        <a href="#">모델 X</a>
-        <a href="#">모델 Y</a>
-        <a href="#">모델 S</a>
+        {cars && cars.map((car, index) => {
+          return (
+            <a key={index} href="#">{car}</a>
+
+          )
+        })}
+
       </Menu>
       <RightMenu>
         <a href="#">Shop</a>
-        <a href="#">Tesla Account</a>
-        <CustomMenu />
+        <a href="#">계정</a>
+        <CustomMenu onClick={() => setBurgerStatus(true)} />
       </RightMenu>
-      <BurgerNav>
-      <CustomClose>
-
-      </CustomClose>
-        <li><a href="#">ASDASDASD</a></li>
+      <BurgerNav show={burgerOpen}>
+        <CloseWrapper>
+          <CustomClose onClick={() => setBurgerStatus(false)} />
+        </CloseWrapper>
+        {cars && cars.map((car, index) => {
+          return (
+            <li key={index} ><a href="#">{car}</a></li>
+          )
+        })}
         <li><a href="#">SDFSDFSDFS</a></li>
         <li><a href="#">SDFSDF</a></li>
         <li><a href="#">SDFSDF</a></li>
-        <li><a href="#">SDFSDFSD</a></li>
-        <li><a href="#">SDFSDF</a></li>
-        <li><a href="#">SDFSDF</a></li>
-        <li><a href="#">SDFSDF</a></li>
-        <li><a href="#">SDFSDF</a></li>
+  
 
       </BurgerNav>
     </Container>
@@ -72,10 +79,10 @@ const Menu = styled.div`
       padding: 0 10px;
       flex-wrap : nowrap;
 
-    }
-    @:-moz-user-disabled(max-width :768px){
+    };
+    @media(max-width :1024px){
       display:none
-    }
+    };
 
 `
 
@@ -107,6 +114,8 @@ const BurgerNav = styled.div`
   display: flex;
   flex-direction : column;
   text-align : start;
+  transform : ${props => props.show ? "translateX(0)" : "translateX(100%)"};
+  transition: transform 0.2s ease-in-out;
   li{
     padding : 15px 0;
     border-bottom: 1px solid rgba(0,0,0, .2);
@@ -120,5 +129,11 @@ const BurgerNav = styled.div`
 `
 
 const CustomClose = styled(CloseIcon)`
+  cursor: pointer;
+  `
 
+
+const CloseWrapper = styled.div`
+  display: flex;
+  justify-content: flex-end;
   `
