@@ -2,12 +2,14 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
-import { selectCar } from '../features/car/carSlice';
+import { selectCar, selectSideBar } from '../features/car/carSlice';
 import { useSelector } from 'react-redux';
 const Header = () => {
   const [burgerOpen, setBurgerStatus] = useState(false)
   const cars = useSelector(selectCar)
-  console.log(cars)
+  const sidebar = useSelector(selectSideBar)
+
+  console.log(sidebar)
   return (
     <Container>
       <a>
@@ -31,14 +33,12 @@ const Header = () => {
         <CloseWrapper>
           <CustomClose onClick={() => setBurgerStatus(false)} />
         </CloseWrapper>
-        {cars && cars.map((car, index) => {
+        {sidebar && sidebar.map((sidebar_obj, index) => {
           return (
-            <li key={index} ><a href="#">{car}</a></li>
+            <li key={index} ><a href="#">{sidebar_obj}</a></li>
           )
         })}
-        <li><a href="#">SDFSDFSDFS</a></li>
-        <li><a href="#">SDFSDF</a></li>
-        <li><a href="#">SDFSDF</a></li>
+
   
 
       </BurgerNav>
